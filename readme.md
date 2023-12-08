@@ -6,7 +6,7 @@ Silent Remover is a python project that allows you to remove the silences contai
 
 To install this project, you need to have python 3.7 or higher and the following libraries:
 
-- wave.py
+- wave.py (native)
 - matplotlib
 
 
