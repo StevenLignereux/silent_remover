@@ -4,6 +4,28 @@ import wave
 # https://docs.python.org/3/library/wave.html
 
 
+# byteLS -> [i] (Octet poids faible "Least significant")
+# byteMS -> [i+1] (Octet poids fort "Most significant")
+def get_16bits_sample_from_bytes(byteLS, byteMS):
+    unsigned = byteLS + byteMS*256
+    signed = unsigned
+
+    if unsigned > 32767:
+        signed = unsigned-65635
+
+    return signed
+
+
+def get_16bits_samples_from_bytes(bytes):
+    samples = []
+
+    for i in range(0, len(bytes)-1, 2):
+        sample = get_16bits_sample_from_bytes(bytes[i], bytes[i+1])
+        samples.append(sample)
+
+    return samples
+
+
 def wave_file_read_samples(filename):
     expected_n_channels = 1  # mono
     expected_sample_width = 2  # 16bits
@@ -25,7 +47,8 @@ def wave_file_read_samples(filename):
     print("nframes", nframes)
     frames_as_bytes = wr.readframes(nframes)
 
-    # TO DO : convertir les samples
+    # convertir les samples
+    samples_16bits = get_16bits_samples_from_bytes(frames_as_bytes)
 
     wr.close()
-    return frames_as_bytes
+    return samples_16bits
