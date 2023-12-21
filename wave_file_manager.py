@@ -3,6 +3,7 @@ import wave
 # test1.wav
 # https://docs.python.org/3/library/wave.html
 
+
 def wave_file_read_samples(filename):
     expected_n_channels = 1  # mono
     expected_sample_width = 2  # 16bits
